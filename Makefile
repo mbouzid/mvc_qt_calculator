@@ -8,8 +8,8 @@ RM		= rm
 
 ###### Files
 
-SOURCES		= main.cpp model.cpp view.cpp moc_controller.cpp
-OBJECTS		= main.o model.o view.o moc_controller.o
+SOURCES		= main.cpp model.cpp moc_controller.cpp
+OBJECTS		= main.o model.o moc_controller.o
 TARGET		= tp2
 
 
@@ -32,15 +32,12 @@ moc_controller.cpp: controller.hpp
 
 ###### Compiling
 
-main.o: main.cpp model.hpp
+main.o: main.cpp view.hpp
 	@echo "Compiling."
 	$(CXX) -c $(CXXFLAGS) $(INC) -o main.o main.cpp
 model.o: model.cpp
 	@echo "Compiling."
 	$(CXX) -c $(CXXFLAGS) $(INC) -o model.o model.cpp
-view.o: view.cpp view.hpp
-	@echo "Compiling."
-	$(CXX) -c $(CXXFLAGS) $(INC) -o view.o view.cpp
 moc_controller.o: moc_controller.cpp
 	@echo "Compiling."
 	$(CXX) -c $(CXXFLAGS) $(INC) -o moc_controller.o moc_controller.cpp
@@ -48,7 +45,6 @@ moc_controller.o: moc_controller.cpp
 ##### Cleaning
 
 clean: $(OBJECTS)
-	@echo "Cleaning."
 	$(RM) $(OBJECTS)
-
+	@echo "Cleaning done."
 	
