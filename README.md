@@ -1,6 +1,6 @@
 # mvc_qt_calculator
 
-## Build with qt4
+## Build with C++ and Qt4 
 ### [WARNING] Attempt to use the MVC paradigm
 
 ## EN
