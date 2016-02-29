@@ -70,7 +70,7 @@ class view
 			{
 				for ( int i = 0 ; i < 3 ; ++i )
 				{	
-					for ( int k = 0 ; k < 3 ; ++k )
+					for ( int k = 2 ; k >=0 ; --k )
 					{
 						grid_numpad->addWidget(*j,i,k);
 						++j ;
