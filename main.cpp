@@ -1,4 +1,3 @@
-#include "model.hpp"
 #include "view.hpp"
 
 #include <QtGui/QApplication>
