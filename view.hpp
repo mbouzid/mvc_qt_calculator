@@ -7,10 +7,8 @@
 #include <QtGui/QVBoxLayout>
 #include <QtCore/QString>
 #include <QtGui/QLineEdit>
-
-// std lib
-#include <vector>
-
+#include <QtCore/QVector>
+#include <QtCore/QDebug>
 // own lib
 #include "controller.hpp"
 
@@ -21,7 +19,7 @@ class view
 		QWidget * m_top ;
 		QWidget * m_numpad ;
 		QWidget * m_operators ;
-		std::vector<QPushButton *> m_figures ;
+		QVector<QPushButton *> m_figures ;
 		QPushButton * m_zero ;
 		QLineEdit * m_result ;
 		controller m_controller ;
@@ -55,7 +53,7 @@ class view
 			
 			for( int i=1 ; i<10 ; ++i )
 			{
-				m_figures.push_back(new QPushButton(QString::number(i),m_numpad) );
+				m_figures.insert(i-1,new QPushButton(QString::number(i),m_numpad) );
 
 			}
 			
@@ -64,16 +62,16 @@ class view
 			
 
 			
-			std::vector<QPushButton*>::reverse_iterator j=m_figures.rbegin() ;
 			
-			while (  j!= m_figures.rend() )
+			int j = 8 ;
+			while ( j>=0 )
 			{
 				for ( int i = 0 ; i < 3 ; ++i )
 				{	
 					for ( int k = 2 ; k >=0 ; --k )
 					{
-						grid_numpad->addWidget(*j,i,k);
-						++j ;
+						grid_numpad->addWidget(m_figures[j],i,k);
+						--j;
 					}
 				}
 			}
@@ -129,17 +127,12 @@ class view
 			
 			QObject::connect(&m_controller,SIGNAL(result(QString)),m_result,SLOT(setText(QString)));
 			
+			for( int i=1 ; i<9 ; ++i )
+			{
+				QObject::connect(m_figures[i],SIGNAL(clicked()),&m_controller, controller::slots_name[i]);
+			}
 			
-			QObject::connect(m_zero,SIGNAL(clicked()),&m_controller,SLOT(add_zero()) );
-			QObject::connect(m_figures[0],SIGNAL(clicked()),&m_controller,SLOT(add_one()) );
-			QObject::connect(m_figures[1],SIGNAL(clicked()),&m_controller,SLOT(add_two()) );
-			QObject::connect(m_figures[2],SIGNAL(clicked()),&m_controller,SLOT(add_three()) );
-			QObject::connect(m_figures[3],SIGNAL(clicked()),&m_controller,SLOT(add_four()) );
-			QObject::connect(m_figures[4],SIGNAL(clicked()),&m_controller,SLOT(add_five()) );
-			QObject::connect(m_figures[5],SIGNAL(clicked()),&m_controller,SLOT(add_six()) );
-			QObject::connect(m_figures[6],SIGNAL(clicked()),&m_controller,SLOT(add_seven()) );
-			QObject::connect(m_figures[7],SIGNAL(clicked()),&m_controller,SLOT(add_eight()) );
-			QObject::connect(m_figures[8],SIGNAL(clicked()),&m_controller,SLOT(add_nine()) );
+			QObject::connect(m_zero,SIGNAL(clicked()),&m_controller,SLOT( add_zero() ));
 			
 			QObject::connect(m_comma,SIGNAL(clicked()),&m_controller,SLOT(add_comma()) );
 			
