@@ -1,15 +1,15 @@
-CXX		= g++
+CXX			= g++
 CXXFLAGS  	= -Wall
-INC		= -I/usr/include/qt4/QtCore -I/usr/include/qt4/QtGui -I/usr/include/qt4 -I.
+INC			= -I/usr/include/qt4/QtCore -I/usr/include/qt4/QtGui -I/usr/include/qt4 -I.
 LIBS		= -lQtGui -lQtCore
-STD		= -std=c++11
+STD			= -std=c++11
 LINK		= g++
-RM		= rm
+RM			= rm
 
 ###### Files
 
-SOURCES		= main.cpp model.cpp moc_controller.cpp
-OBJECTS		= main.o model.o moc_controller.o
+SOURCES		= main.cpp model.cpp moc_controller.cpp controller.o
+OBJECTS		= main.o model.o moc_controller.o controller.o
 TARGET		= tp2
 
 
@@ -34,14 +34,16 @@ moc_controller.cpp: controller.hpp
 
 main.o: main.cpp view.hpp
 	@echo "Compiling."
-	$(CXX) -c $(CXXFLAGS) $(INC) -o main.o main.cpp
+	$(CXX) -c $(CXXFLAGS) $(INC) -o main.o main.cpp $(STD)
 model.o: model.cpp
 	@echo "Compiling."
-	$(CXX) -c $(CXXFLAGS) $(INC) -o model.o model.cpp
+	$(CXX) -c $(CXXFLAGS) $(INC) -o model.o model.cpp $(STD)
 moc_controller.o: moc_controller.cpp
 	@echo "Compiling."
-	$(CXX) -c $(CXXFLAGS) $(INC) -o moc_controller.o moc_controller.cpp
-
+	$(CXX) -c $(CXXFLAGS) $(INC) -o moc_controller.o moc_controller.cpp $(STD)
+controller.o: controller.cpp
+	@echo "Compiling"
+	$(CXX) -c $(CXXFLAGS) $(INC) -o controller.o controller.cpp $(STD)
 ##### Cleaning
 
 clean: $(OBJECTS)
