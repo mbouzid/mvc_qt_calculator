@@ -5,15 +5,27 @@
 
 #include "model.hpp"
 
+
 class controller : public QObject
 {
 	Q_OBJECT
-
+	
+	public :
+	
+		controller():m_model()
+		{
+			
+		}
+		
+		static const char * slots_name[9];
 	private :
 	
 		Calc m_model ;
 	
-	private slots :
+	public slots :
+	
+		
+	
 	
 		void add_comma()
 		{
@@ -142,26 +154,16 @@ class controller : public QObject
 		}
 		
 		
+		
+		
+         
 	signals :
 		void result( const QString & res ) ;
 		void change_text( const QString & expr);
-	public :
 	
-		controller():m_model()
-		{
-			
-		}
+
 		
-		typedef void (controller::*f_add)(void );
-     
-    	 	f_add f[1] = 
-    	 	{
-       		 &controller::add_zero
-         	};
-		controller():m_model()
-		{
-			
-		}
+		
 	
 	
 };
