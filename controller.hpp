@@ -151,6 +151,17 @@ class controller : public QObject
 		{
 			
 		}
+		
+		typedef void (controller::*f_add)(void );
+     
+    	 	f_add f[1] = 
+    	 	{
+       		 &controller::add_zero
+         	};
+		controller():m_model()
+		{
+			
+		}
 	
 	
 };
