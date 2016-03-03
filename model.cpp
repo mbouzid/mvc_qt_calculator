@@ -3,14 +3,14 @@
 Calc::Calc()
 {}
 
-void Calc::addChar(const char c)
+void Calc::addChar(const char c) throw (model_exception &)
 {
 	// On vérifie le caractère
 	bool ok = (c == '0' or c == '1' or c == '2' or c == '3' or c == '4' or c == '5' or c == '6' or c == '7' or c == '8' or c == '9' or c == '.' );
-        if (!ok) 
-	{
-		std::cerr<<"Calc::addChar(const char c) --> Le caractère "<< c << " n'est pas accepté." << std::endl;
-		exit(EXIT_FAILURE);
+       
+    if (!ok) 
+	{	
+		throw(new model_exception("Calc::addChar(const char c) --> Le caractère n'est pas accepté." ));
 	}
 
 	_stringCreateValue.push_back(c);
@@ -24,7 +24,6 @@ void Calc::pushValue()
 	assert(iss >> number);
 	_stackValues.push(number);
 	_stringCreateValue.clear();
-	//std::cout<<_stackValues.top()<<std::endl;
 }
 
 int Calc::opPriority(const int ope)
@@ -47,7 +46,7 @@ int Calc::opPriority(const int ope)
 	return 0;
 }
 
-int Calc::opArite(const int ope)
+int Calc::opArite(const int ope) throw (model_exception &)
 {
 	switch (ope)
 	{
@@ -62,13 +61,13 @@ int Calc::opArite(const int ope)
 		case BRACKETR:
 			return 0;
 	}
-	// Default --> Cas impossible
-	std::cerr<<"Calc::opArite(const int ope) --> L'opérateur "<< ope << " n'est pas reconnu." << std::endl;
+	
+	throw ( new model_exception("Calc::opArite(const int ope) --> L'opérateur  n'est pas reconnu."));
 	exit(EXIT_FAILURE);
 	return -1;
 }
 
-void Calc::doCompute(const int nextOpe)
+void Calc::doCompute(const int nextOpe) throw (model_exception &)
 {
 	// On ne calcule pas ce qu'il y a avant une parenthèse ouvrante
 	if ( nextOpe == BRACKETL ) return;
@@ -109,8 +108,15 @@ void Calc::doCompute(const int nextOpe)
 				_stackValues.push(x*y);
 				break;
 			case DIV:
-				_stackValues.push(x/y);
+			{
+				if ( ((y==0)or(x==0)) ) 
+				{
+					throw (new model_exception("MATH ERROR"));
+				}
+				else
+					_stackValues.push(x/y);
 				break;
+			}
 			case SQUARE:
 				_stackValues.push(y*y);
 				break;
@@ -123,7 +129,6 @@ void Calc::plus()
 	pushValue();
 	doCompute(PLUS);
 	_stackOpe.push(PLUS);
-	//std::cout<<"+"<<std::endl;
 }
 
 void Calc::minus()
@@ -131,7 +136,6 @@ void Calc::minus()
 	pushValue();
 	doCompute(MINUS);
 	_stackOpe.push(MINUS);
-	//std::cout<<"-"<<std::endl;
 }
 
 void Calc::times()
@@ -139,15 +143,13 @@ void Calc::times()
 	pushValue();
 	doCompute(TIMES);
 	_stackOpe.push(TIMES);
-	//std::cout<<"*"<<std::endl;
 }
 
-void Calc::divide()
+void Calc::divide() throw (model_exception&)
 {
 	pushValue();
 	doCompute(DIV);
 	_stackOpe.push(DIV);
-	//std::cout<<"/"<<std::endl;
 }
 
 void Calc::square()
@@ -155,20 +157,19 @@ void Calc::square()
 	pushValue();
 	doCompute(SQUARE);
 	_stackOpe.push(SQUARE);
-	//std::cout<<"²"<<std::endl;
 }
 
 
-double Calc::equal()
+double Calc::equal() throw (model_exception &)
 {	
 	pushValue();
 	doCompute(-1);
-	//std::cout<<"="<<std::endl;
+
 	if (_stackValues.empty()) return 0;
 		else if (_stackValues.size() == 1) return _stackValues.top();
 			else 
 			{
-				std::cerr<<"Calc::equal() --> La pile _stackValues contient plus d'1 valeur"<<std::endl;
+				throw (new model_exception("Calc::equal() --> La pile _stackValues contient plus d'1 valeur"));
 				exit(EXIT_FAILURE);
 			}
 	return 0;
@@ -179,13 +180,11 @@ void Calc::bracketL()
 	pushValue();
 	doCompute(BRACKETL);
 	_stackOpe.push(BRACKETL);
-	//std::cout<<"("<<std::endl;
 }
 
 void Calc::bracketR()
 {
 	pushValue();
 	doCompute(BRACKETR);
-	//std::cout<<")"<<std::endl;
 	// Pas d'insertion de parenthèse droite puisque l'on traite le calcul
 }
