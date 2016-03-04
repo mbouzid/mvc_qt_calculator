@@ -56,7 +56,6 @@ class Calc
 			return _stringCreateValue;
 		}
 		
-		}
 		~Calc()
 		{}
 };
