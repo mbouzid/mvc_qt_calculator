@@ -51,7 +51,7 @@ class Calc
 		}
 		
 		
-		const string & get_value() const
+		const std::string & get_value() const
 		{
 			return _stringCreateValue;
 		}
