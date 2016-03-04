@@ -1,10 +1,10 @@
-CXX		= g++
-CXXFLAGS= -Wall
-INC		= -I/usr/include/qt4/QtCore -I/usr/include/qt4/QtGui -I/usr/include/qt4 -I.
-LIBS	= -lQtGui -lQtCore
-STD		= -std=c++11
-LINK	= g++
-RM		= rm
+CXX			= g++
+CXXFLAGS	= -Wall
+INC			= -I/usr/include/qt4/QtCore -I/usr/include/qt4/QtGui -I/usr/include/qt4 -I.
+LIBS		= -lQtGui -lQtCore
+STD			= -std=c++11
+LINK		= g++
+RM			= rm
 
 ###### Files
 
