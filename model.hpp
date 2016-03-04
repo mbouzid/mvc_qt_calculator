@@ -50,6 +50,13 @@ class Calc
 			return (_stackValues.size() == 1 );
 		}
 		
+		
+		const string & get_value() const
+		{
+			return _stringCreateValue;
+		}
+		
+		}
 		~Calc()
 		{}
 };
