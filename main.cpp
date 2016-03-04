@@ -1,6 +1,7 @@
 #include "view.hpp"
 
 #include <QtGui/QApplication>
+#include <QtGui/QWidget>
 
 int main(int argc, char** argv)
 {
