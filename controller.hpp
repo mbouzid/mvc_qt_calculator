@@ -32,7 +32,7 @@ class controller : public QObject
 			if ( button )
 			{
 				
-				emit change_text(button->text());
+				emit change_text(m_model.get_value()+button->text());
 				char label = button->text().at(0).toAscii() ;
 				if ( (label >= '0') && ( label <='9' ) )
 				{
